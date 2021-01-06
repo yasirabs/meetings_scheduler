@@ -12,7 +12,7 @@ ruby meeting_scheduler.rb
 rspec meeting_scheduler_spec.rb 
 ```
 
-## Soluction Description
+## Description Notes
 
 - The class initializes with two arguments #1 the list of meetings with schedule details and #2 total working hours of the day.
 - If any of the initializers is nil it will exit from the execution of the function.
