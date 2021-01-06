@@ -43,11 +43,11 @@ class MeetingScheduler
 
   private
 
-  def offsite_travel_time(duration)
+  def offsite_travel_time(total_offsite_meetings_count)
     value = 0
-    while duration > 0
+    while total_offsite_meetings_count > 0
       value += 30
-      duration -= 1
+      total_offsite_meetings_count -= 1
     end
     value
   end
