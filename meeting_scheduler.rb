@@ -18,9 +18,7 @@ class MeetingScheduler
 
     meeting_hours = meeting_list.sum {|h| h[:duration]}
 
-    total_offsite_meetings_count = meeting_list.count { |x| x[:type] == :offsite }
-
-    total_meeting_hours = day_start_time + meeting_hours * 60 * 60 + offsite_travel_time(total_offsite_meetings_count) * 60
+    total_meeting_hours = day_start_time + meeting_hours * 60 * 60 + offsite_travel_time(meeting_list) * 60
 
     return "No, Can't fit" if total_meeting_hours > day_end_time
 
@@ -28,8 +26,8 @@ class MeetingScheduler
 
     scheduled_list = []
 
-    meeting_list.reverse.each do |list|
-      day_start_time += 30 * 60 if list[:type] == :offsite
+    meeting_list.reverse.each_with_index do |list, index|
+      day_start_time += 30 * 60 if list[:type] == :offsite && !index.zero?
 
       updated_time = day_start_time + list[:duration].to_f * 60 * 60
 
@@ -38,12 +36,20 @@ class MeetingScheduler
       day_start_time = updated_time
     end
 
-    scheduled_list
+    puts scheduled_list
+
+    "Yes, can fit" if scheduled_list.any?
+    
+    rescue => ex
+      ex.message  
   end
 
   private
 
-  def offsite_travel_time(total_offsite_meetings_count)
+  def offsite_travel_time(meeting_list)
+    total_offsite_meetings_count = meeting_list.count { |x| x[:type] == :offsite }
+    total_onsite_meetings_count = meeting_list.count { |x| x[:type] == :onsite }
+    total_offsite_meetings_count = (total_onsite_meetings_count == 0) ? total_offsite_meetings_count - 1 : total_offsite_meetings_count
     value = 0
     while total_offsite_meetings_count > 0
       value += 30
@@ -53,14 +59,12 @@ class MeetingScheduler
   end
 end
 
-
 set_of_meetings = [
   { name: "Meeting 1", duration: 3, type: :onsite },
   { name: "Meeting 2", duration: 2, type: :offsite },
   { name: "Meeting 3", duration: 1, type: :offsite },
   { name: "Meeting 4", duration: 0.5, type: :onsite }
 ]
-
 
 total_no_of_hours = 8
 schedule = MeetingScheduler.new(set_of_meetings, total_no_of_hours)
