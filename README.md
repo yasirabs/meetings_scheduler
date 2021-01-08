@@ -12,7 +12,7 @@ ruby meeting_scheduler.rb
 rspec meeting_scheduler_spec.rb 
 ```
 
-Example to Test to code : 
+Example to Test the code : 
 ```
 set_of_meetings = [
   { name: "Meeting 1", duration: 3, type: :onsite },
