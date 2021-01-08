@@ -12,6 +12,23 @@ ruby meeting_scheduler.rb
 rspec meeting_scheduler_spec.rb 
 ```
 
+Example to Test to code : 
+```
+set_of_meetings = [
+  { name: "Meeting 1", duration: 3, type: :onsite },
+  { name: "Meeting 2", duration: 2, type: :offsite },
+  { name: "Meeting 3", duration: 1, type: :offsite },
+  { name: "Meeting 4", duration: 0.5, type: :onsite }
+]
+
+total_no_of_hours = 8
+
+schedule = MeetingScheduler.new(set_of_meetings, total_no_of_hours)
+
+puts schedule.meetings
+
+```
+
 ## Description Notes
 
 - The class initializes with two arguments #1 the list of meetings with schedule details and #2 total working hours of the day.
