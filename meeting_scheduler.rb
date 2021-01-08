@@ -11,35 +11,27 @@ class MeetingScheduler
     return if @set_of_meetings.empty? || @total_no_of_hours.nil?
 
     day_start_time = Time.parse("9:00")
-
     day_end_time = day_start_time + @total_no_of_hours * 60 * 60
-
     meeting_list = @set_of_meetings.reverse.sort_by!{ |meeting| [meeting[:type]] }
-
     meeting_hours = meeting_list.sum {|h| h[:duration]}
-
     total_meeting_hours = day_start_time + meeting_hours * 60 * 60 + offsite_travel_time(meeting_list) * 60
 
     return "No, Can't fit" if total_meeting_hours > day_end_time
 
     updated_time = nil
-
     scheduled_list = []
 
     meeting_list.reverse.each_with_index do |list, index|
       day_start_time += 30 * 60 if list[:type] == :offsite && !index.zero?
-
       updated_time = day_start_time + list[:duration].to_f * 60 * 60
-
       scheduled_list << "#{day_start_time.strftime("%I:%M")} - #{updated_time.strftime("%I:%M")} - #{list[:name]}"
-
       day_start_time = updated_time
     end
 
     scheduled_list.unshift("Yes, can fit :")
 
-    rescue => ex
-      ex.message  
+  rescue => ex
+    ex.message  
   end
 
   private
