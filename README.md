@@ -32,6 +32,7 @@ puts schedule.meetings
 ## Description Notes
 
 - The class initializes with two arguments #1 the list of meetings with schedule details and #2 total working hours of the day.
+ - Total working hours can vary as per the different working environments that's why it has been taking as a param. 
 - If any of the initializers is nil it will exit from the execution of the function.
 - Sort the list of meetings by onsite and offsite.
 - Sum the list of the meeting hours by their duration.

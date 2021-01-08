@@ -8,7 +8,7 @@ class MeetingScheduler
   end
 
   def meetings
-    return nil if @set_of_meetings.nil? || @total_no_of_hours.nil?
+    return if @set_of_meetings.empty? || @total_no_of_hours.nil?
 
     day_start_time = Time.parse("9:00")
 
@@ -36,10 +36,8 @@ class MeetingScheduler
       day_start_time = updated_time
     end
 
-    puts scheduled_list
+    scheduled_list.unshift("Yes, can fit :")
 
-    "Yes, can fit" if scheduled_list.any?
-    
     rescue => ex
       ex.message  
   end
